@@ -1,7 +1,6 @@
 # Ideas (short or long term)
 
 ## Main gameplay
-- [ ] Sex 2
 - [ ] Sound effects
 - [ ] Animations
 - [ ] Classic chess
@@ -57,4 +56,4 @@
 
 
 ### Done
-- [x] Sex 1
+- [x] Repo init
