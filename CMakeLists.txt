@@ -1,0 +1,28 @@
+cmake_minimum_required(VERSION 3.16)
+
+project(
+    "When the chess"
+    VERSION
+    0.1
+    LANGUAGES
+    CXX
+)
+
+file(GLOB_RECURSE SRC_FILES src/*.cpp)
+add_executable(wtc
+    ${SRC_FILES}
+)
+
+
+target_include_directories(wtc 
+    PRIVATE
+    ${PROJECT_SOURCE_DIR}/include
+)
+
+include_directories(${SDL2_INCLUDE_DIRS})
+target_link_libraries(wtc ${SDL2_LIBRARIES})
+
+set_target_properties(wtc 
+    PROPERTIES 
+    RUNTIME_OUTPUT_DIRECTORY  ${PROJECT_SOURCE_DIR}/bin
+)
