@@ -1,0 +1,6 @@
+#ifndef HEADER_WHEN_THE_CHESS_EVENTS_
+#define HEADER_WHEN_THE_CHESS_EVENTS_
+
+void handle_events();
+
+#endif /* HEADER_WHEN_THE_CHESS_EVENTS_ */
