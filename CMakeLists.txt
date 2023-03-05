@@ -19,6 +19,7 @@ target_include_directories(wtc
     ${PROJECT_SOURCE_DIR}/include
 )
 
+find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS})
 target_link_libraries(wtc ${SDL2_LIBRARIES})
 
