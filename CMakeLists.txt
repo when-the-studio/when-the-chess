@@ -9,6 +9,13 @@ project(
 )
 
 file(GLOB_RECURSE SRC_FILES src/*.cpp)
+add_compile_options(
+	-Wall
+	-Wextra
+	-pedantic
+	-O2
+	-std=c++20
+)
 add_executable(wtc
     ${SRC_FILES}
 )
