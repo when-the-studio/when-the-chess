@@ -11,4 +11,4 @@ Usage:
 ```bash
 ./cmakebuild [-r]
 ```
-Use the `-r` option to run the executable right after the build
+Use the `-r` option to run the executable right after the build.

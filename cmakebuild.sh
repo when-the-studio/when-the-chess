@@ -25,5 +25,3 @@ do
         h) help_function;;
     esac
 done
-
-
