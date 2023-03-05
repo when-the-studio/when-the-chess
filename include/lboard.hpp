@@ -76,6 +76,8 @@ namespace logical {
 		Tile const& tile_at(CoordsInt coords) const;
 		Tile& tile_at(CoordsInt coords);
 
+		CoordsIntRect const& rect_that_contains_all_the_tiles() const;
+
 	private:
 		/* The tiles here are supposed to be squares arranged on a classic 2D grid.
 		 * It has a rectangle (of dimentions specified by `rect.dims`) of potential tiles

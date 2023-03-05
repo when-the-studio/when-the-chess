@@ -48,4 +48,8 @@ namespace logical {
 		assert(opt_tile.has_value());
 		return opt_tile.value();
 	}
+
+	CoordsIntRect const& Board::rect_that_contains_all_the_tiles() const {
+		return this->rect;
+	}
 }
