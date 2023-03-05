@@ -12,6 +12,8 @@ public:
 
 public:
 	CoordsInt(int x, int y);
+
+	bool operator==(CoordsInt rhs) const;
 };
 
 /* Dimentions (width and height) of a rectangle of tiles in a 2D grid. */
@@ -36,10 +38,49 @@ public:
 
 	bool contains(CoordsInt coords) const;
 
+	int top() const;
+	int bottom() const;
+	int left() const;
+	int right() const;
+
 	/* Returns the index of coords in this rect when we index all the tiles in the rect
 	 * from 0 (top-left) to `this->dims.surface()-1` (bottom-right) in reading order
 	 * (so that top-right has index `this->dims.w-1` for example). */
 	int left_to_right_top_to_bottom_index(CoordsInt coords) const;
+
+public:
+	/* Range-based `for` loops support.
+	 * The `begin` and `end` methods return C++-style iterators that allow iterating over
+	 * the coords in the rect and that onterface with the range-based `for` loop syntax
+	 * like so: `for (CoordsInt coords : rect) { ... }`. */
+
+	class Iterator
+	{
+	public:
+		using iterator_category = std::input_iterator_tag;
+		using difference_type = int;
+		using value_type = CoordsInt;
+		using pointer = value_type*;
+		using reference = value_type&;
+
+	public:
+		CoordsInt current_coords;
+		CoordsIntRect const& rect;
+
+	public:
+		CoordsInt const& operator*() const;
+		Iterator& operator++();
+		Iterator operator++(int);
+		bool operator==(Iterator const& right) const;
+		bool operator!=(Iterator const& right) const;
+	
+	private:
+		friend class CoordsIntRect;
+		Iterator(CoordsIntRect const& rect, CoordsInt starting_coords);
+	};
+
+	Iterator begin() const;
+	Iterator end() const;
 };
 
 /* Everything in the `logical` namespace is purely about board states considered logically,

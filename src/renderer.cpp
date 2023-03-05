@@ -28,12 +28,11 @@ namespace renderer {
 		SDL_SetRenderDrawColor(s_renderer, 54, 32, 96, 255);
 		SDL_RenderClear(s_renderer);
 
-		CoordsIntRect const& int_rect = board.rect_that_contains_all_the_tiles();
-		for (int y = int_rect.top_left.y; y < int_rect.top_left.y + int_rect.dims.h; y++)
-		for (int x = int_rect.top_left.x; x < int_rect.top_left.x + int_rect.dims.w; x++) {
+		for (CoordsInt coords : board.rect_that_contains_all_the_tiles()) {
 			/* Placeholder rendering of tiles. */
-			SDL_SetRenderDrawColor(s_renderer, (y * 100) % 256, (x * 100) % 256, 0, 255);
-			SDL_Rect rect{x * 30, y * 30, 30, 30};
+			SDL_SetRenderDrawColor(s_renderer,
+				(coords.y * 100) % 256, (coords.x * 100) % 256, 0, 255);
+			SDL_Rect rect{coords.x * 30, coords.y * 30, 30, 30};
 			SDL_RenderFillRect(s_renderer, &rect);
 		}
 
