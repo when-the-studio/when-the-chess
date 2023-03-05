@@ -5,7 +5,7 @@
 #include <optional>
 #include <vector>
 
-/* Designate a tile in a 2D grid. */
+/* Designate the position of a tile in a 2D grid. */
 class CoordsInt {
 public:
 	int x, y;
@@ -21,6 +21,25 @@ public:
 
 public:
 	CoordsIntRectDims(int w, int h);
+
+	int surface() const;
+};
+
+/* Designate a rectangle of tiles in a 2D grid. */
+class CoordsIntRect {
+public:
+	CoordsInt top_left;
+	CoordsIntRectDims dims;
+
+public:
+	CoordsIntRect(CoordsInt top_left, CoordsIntRectDims dims);
+
+	bool contains(CoordsInt coords) const;
+
+	/* Returns the index of coords in this rect when we index all the tiles in the rect
+	 * from 0 (top-left) to `this->dims.surface()-1` (bottom-right) in reading order
+	 * (so that top-right has index `this->dims.w-1` for example). */
+	int left_to_right_top_to_bottom_index(CoordsInt coords) const;
 };
 
 /* Everything in the `logical` namespace is purely about board states considered logically,
@@ -49,26 +68,25 @@ namespace logical {
 	};
 
 	class Board {
-	private:
-		/* The tiles here are supposed to be squares arranged on a classic 2D grid.
-		 * It has a rectangle (of dimentions specified by `dims`) of potential tiles
-		 * so that it has some freedom in its possible shapes (although the tiles
-		 * should not be too far away from eachother as this would waste a lot of memory). */
-		std::vector<std::optional<Tile>> tile_rectangular_table;
-		CoordsIntRectDims dims;
-		/* The `top_left` coords are the coordinates of the potential tile in the top left
-		 * corner of the `tile_rectangular_table`.
-		 * This is useful to allow adding/removing rows/columns of tiles on the left/top
-		 * without shifting the coords of all the other tiles. */
-		CoordsInt top_left;
-
 	public:
-		Board(CoordsIntRectDims dims);
+		Board(CoordsIntRect rect);
+
 		bool is_there_a_tile_at(CoordsInt coords) const;
+
 		Tile const& tile_at(CoordsInt coords) const;
 		Tile& tile_at(CoordsInt coords);
 
-		/* TODO: Add iterator on the tiles. */
+	private:
+		/* The tiles here are supposed to be squares arranged on a classic 2D grid.
+		 * It has a rectangle (of dimentions specified by `rect.dims`) of potential tiles
+		 * so that it has some freedom in its possible shapes (although the tiles
+		 * should not be too far away from eachother as this would waste a lot of memory). */
+		std::vector<std::optional<Tile>> table;
+		/* The `rect.top_left` coords are the coordinates of the potential tile in the
+		 * top-left corner of the `table`.
+		 * This is useful to allow adding/removing rows/columns of tiles on the left/top
+		 * without shifting the coords of all the other tiles. */
+		CoordsIntRect rect;
 	};
 }
 
