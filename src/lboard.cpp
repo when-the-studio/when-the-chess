@@ -84,7 +84,7 @@ CoordsIntRect::Iterator CoordsIntRect::end() const {
 
 namespace logical {
 	Board::Board(CoordsIntRect rect):
-	table{rect.dims.surface(), std::nullopt},
+	table{static_cast<std::size_t>(rect.dims.surface()), std::nullopt},
 	rect{rect} {}
 
 	bool Board::is_there_a_tile_at(CoordsInt coords) const {
