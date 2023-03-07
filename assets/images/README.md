@@ -1,0 +1,1 @@
+SVGs come from [the SVG_chess_pieces image set on wikimedia](https://commons.wikimedia.org/wiki/Category:SVG_chess_pieces) and is thus available under the [CC0](https://creativecommons.org/publicdomain/zero/1.0/) license "Public Domain Dedication".
