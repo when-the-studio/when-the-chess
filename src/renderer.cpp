@@ -20,18 +20,18 @@ namespace renderer {
 		
 		/* Test loading the image assets. */
 		std::array<char const*, 12> piece_image_asset_file_paths{
-			"assets/images/Chess_plt45.svg",
-			"assets/images/Chess_rlt45.svg",
-			"assets/images/Chess_nlt45.svg",
-			"assets/images/Chess_blt45.svg",
-			"assets/images/Chess_qlt45.svg",
-			"assets/images/Chess_klt45.svg",
-			"assets/images/Chess_pdt45.svg",
-			"assets/images/Chess_rdt45.svg",
-			"assets/images/Chess_ndt45.svg",
-			"assets/images/Chess_bdt45.svg",
-			"assets/images/Chess_qdt45.svg",
-			"assets/images/Chess_kdt45.svg",
+			"../assets/images/Chess_plt45.svg",
+			"../assets/images/Chess_rlt45.svg",
+			"../assets/images/Chess_nlt45.svg",
+			"../assets/images/Chess_blt45.svg",
+			"../assets/images/Chess_qlt45.svg",
+			"../assets/images/Chess_klt45.svg",
+			"../assets/images/Chess_pdt45.svg",
+			"../assets/images/Chess_rdt45.svg",
+			"../assets/images/Chess_ndt45.svg",
+			"../assets/images/Chess_bdt45.svg",
+			"../assets/images/Chess_qdt45.svg",
+			"../assets/images/Chess_kdt45.svg",
 		};
 		for (std::size_t i = 0; i < piece_image_asset_file_paths.size(); i++) {
 			char const* file_path = piece_image_asset_file_paths[i];
