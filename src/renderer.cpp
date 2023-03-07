@@ -1,13 +1,14 @@
 #include <cassert>
-#include <iostream>
+#include <array>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include "renderer.hpp"
 
 namespace renderer {
-	static SDL_Window*   s_window      = nullptr;
-	static SDL_Renderer* s_renderer    = nullptr;
-	static SDL_Texture*  s_test_horsie = nullptr; /* Test image asset. */
+	static SDL_Window*   s_window   = nullptr;
+	static SDL_Renderer* s_renderer = nullptr;
+	/* Test image assets. */
+	static std::array<SDL_Texture*, 12> s_test_pieces_sprites{nullptr};
 
 	static void load_images() {
 		#if 0
@@ -17,12 +18,29 @@ namespace renderer {
 			}
 		#endif
 		
-		/* Test loading of an image asset. */
-		SDL_Surface* surface = IMG_Load("assets/images/Chess_nlt45.svg");
-		assert(surface != nullptr);
-		s_test_horsie = SDL_CreateTextureFromSurface(s_renderer, surface);
-		SDL_FreeSurface(surface);
-		assert(s_test_horsie != nullptr);
+		/* Test loading the image assets. */
+		std::array<char const*, 12> piece_image_asset_file_paths{
+			"assets/images/Chess_plt45.svg",
+			"assets/images/Chess_rlt45.svg",
+			"assets/images/Chess_nlt45.svg",
+			"assets/images/Chess_blt45.svg",
+			"assets/images/Chess_qlt45.svg",
+			"assets/images/Chess_klt45.svg",
+			"assets/images/Chess_pdt45.svg",
+			"assets/images/Chess_rdt45.svg",
+			"assets/images/Chess_ndt45.svg",
+			"assets/images/Chess_bdt45.svg",
+			"assets/images/Chess_qdt45.svg",
+			"assets/images/Chess_kdt45.svg",
+		};
+		for (std::size_t i = 0; i < piece_image_asset_file_paths.size(); i++) {
+			char const* file_path = piece_image_asset_file_paths[i];
+			SDL_Surface* surface = IMG_Load(file_path);
+			assert(surface != nullptr);
+			s_test_pieces_sprites[i] = SDL_CreateTextureFromSurface(s_renderer, surface);
+			SDL_FreeSurface(surface);
+			assert(s_test_pieces_sprites[i] != nullptr);
+		}
 
 		IMG_Quit();
 	}
@@ -50,9 +68,11 @@ namespace renderer {
 		SDL_SetRenderDrawColor(s_renderer, 54, 32, 96, 255);
 		SDL_RenderClear(s_renderer);
 
-		/* Test rendering of an image asset. */
-		SDL_Rect rect{100, 100, 45, 45};
-		SDL_RenderCopy(s_renderer, s_test_horsie, NULL, &rect);
+		/* Test rendering of the image assets. */
+		for (std::size_t i = 0; i < s_test_pieces_sprites.size(); i++) {
+			SDL_Rect rect{100 + static_cast<int>(i) * 45, 100, 45, 45};
+			SDL_RenderCopy(s_renderer, s_test_pieces_sprites[i], NULL, &rect);
+		}
 
 		SDL_RenderPresent(s_renderer);
 	}
