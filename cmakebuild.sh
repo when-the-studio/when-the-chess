@@ -20,7 +20,9 @@ help_function() {
 }
 
 run() {
-	./bin/wtc
+	cd bin
+	./wtc
+	cd ..
 }
 
 
