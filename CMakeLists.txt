@@ -8,6 +8,10 @@ project(
 	CXX
 )
 
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH}
+	"${CMAKE_SOURCE_DIR}/cmake/"
+)
+
 file(GLOB_RECURSE SRC_FILES src/*.cpp)
 add_compile_options(
 	-Wall
@@ -27,8 +31,9 @@ target_include_directories(wtc
 )
 
 find_package(SDL2 REQUIRED)
-include_directories(${SDL2_INCLUDE_DIRS})
-target_link_libraries(wtc ${SDL2_LIBRARIES})
+find_package(SDL2_image REQUIRED)
+include_directories(${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS})
+target_link_libraries(wtc ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
 
 set_target_properties(wtc 
 	PROPERTIES 

@@ -2,13 +2,19 @@
 
 h
 
+## Dependencies
+
+- CMake (build system)
+- SDL2
+- SDL_image 2
+
 ## Build
-For now we use CMake (can change).<br>
+We use CMake with a helper shell script.<br>
 For now we use a global recursive method for more simplicity although it's commonly known as a bad pratice.
 
 A script is usable for build.<br>
 Usage:
 ```bash
-./cmakebuild [-r]
+./cmakebuild.sh [-r]
 ```
-Use the `-r` option to run the executable right after the build.
+Use the `-r` option to run the executable right after the build if it succeeds.
