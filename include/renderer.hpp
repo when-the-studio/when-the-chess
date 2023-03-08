@@ -1,6 +1,16 @@
 #ifndef HEADER_WHEN_THE_CHESS_RENDERER_
 #define HEADER_WHEN_THE_CHESS_RENDERER_
 
+#include <cstdint>
+
+class Rgb {
+public:
+	std::uint8_t r, g, b;
+
+public:
+	Rgb(std::uint8_t r, std::uint8_t g, std::uint8_t b);
+};
+
 namespace logical { class Board; }
 
 /* Encapsulates the rendering. */

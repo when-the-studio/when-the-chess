@@ -1,15 +1,22 @@
 #include <cassert>
 #include <array>
+#include <cstdint>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include "renderer.hpp"
 #include "lboard.hpp"
+
+Rgb::Rgb(std::uint8_t r, std::uint8_t g, std::uint8_t b):
+r{r}, g{g}, b{b} {}
 
 namespace renderer {
 	static SDL_Window*   s_window   = nullptr;
 	static SDL_Renderer* s_renderer = nullptr;
 	/* Test image assets. */
 	static std::array<SDL_Texture*, 12> s_test_pieces_sprites{nullptr};
+
+	static Rgb s_rgb_tile_dark {150, 100, 40};
+	static Rgb s_rgb_tile_light{200, 140, 40};
 
 	static void load_images() {
 		#if 0
@@ -70,16 +77,19 @@ namespace renderer {
 		SDL_RenderClear(s_renderer);
 
 		for (CoordsInt coords : board.rect_that_contains_all_the_tiles()) {
-			/* Placeholder rendering of tiles. */
-			SDL_SetRenderDrawColor(s_renderer,
-				(coords.y * 100) % 256, (coords.x * 100) % 256, 0, 255);
-			SDL_Rect rect{coords.x * 30, coords.y * 30, 30, 30};
+			Rgb const& color = (coords.x + coords.y) % 2 == 0 ?
+				s_rgb_tile_dark : s_rgb_tile_light;
+			SDL_SetRenderDrawColor(s_renderer, color.r, color.g, color.b, 255);
+			SDL_Rect rect{coords.x * 45, coords.y * 45, 45, 45};
 			SDL_RenderFillRect(s_renderer, &rect);
 		}
-		
+
 		/* Test rendering of the image assets. */
 		for (std::size_t i = 0; i < s_test_pieces_sprites.size(); i++) {
-			SDL_Rect rect{100 + static_cast<int>(i) * 45, 100, 45, 45};
+			SDL_Rect rect{
+				static_cast<int>(i % 8) * 45,
+				static_cast<int>(i / 8) * 45,
+				45, 45};
 			SDL_RenderCopy(s_renderer, s_test_pieces_sprites[i], NULL, &rect);
 		}
 
