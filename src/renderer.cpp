@@ -78,7 +78,7 @@ namespace renderer {
 
 		for (CoordsInt coords : board.rect_that_contains_all_the_tiles()) {
 			Rgb const& color = (coords.x + coords.y) % 2 == 0 ?
-				s_rgb_tile_dark : s_rgb_tile_light;
+				s_rgb_tile_light : s_rgb_tile_dark;
 			SDL_SetRenderDrawColor(s_renderer, color.r, color.g, color.b, 255);
 			SDL_Rect rect{coords.x * 45, coords.y * 45, 45, 45};
 			SDL_RenderFillRect(s_renderer, &rect);

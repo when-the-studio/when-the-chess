@@ -30,13 +30,13 @@ int CoordsIntRect::top() const {
 	return this->top_left.y;
 }
 int CoordsIntRect::bottom() const {
-	return this->top_left.y + this->dims.h;
+	return this->top_left.y + this->dims.h - 1;
 }
 int CoordsIntRect::left() const {
 	return this->top_left.x;
 }
 int CoordsIntRect::right() const {
-	return this->top_left.x + this->dims.w;
+	return this->top_left.x + this->dims.w - 1;
 }
 
 int CoordsIntRect::left_to_right_top_to_bottom_index(CoordsInt coords) const {
