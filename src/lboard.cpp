@@ -83,9 +83,22 @@ CoordsIntRect::Iterator CoordsIntRect::end() const {
 }
 
 namespace logical {
+	Piece::Piece(Type type, PlayerColor color):
+	type{type}, color{color} {}
+
+	Tile::Tile():
+	opt_piece{std::nullopt} {}
+
 	Board::Board(CoordsIntRect rect):
-	table{static_cast<std::size_t>(rect.dims.surface()), std::nullopt},
+	table{static_cast<std::size_t>(rect.dims.surface()), Tile{}},
 	rect{rect} {}
+
+	Board::Board():
+	Board({{0, 0}, {8, 8}}) {
+		/* TODO: Actual classic chess initial pieces.
+		 * For now there is just a placeholder horsie. */
+		this->tile_at({2, 4}).opt_piece = Piece{Piece::Type::KNIGHT, PlayerColor::WHITE};
+	}
 
 	bool Board::is_there_a_tile_at(CoordsInt coords) const {
 		return this->rect.contains(coords);

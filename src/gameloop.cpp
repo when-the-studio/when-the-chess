@@ -6,7 +6,7 @@
 
 namespace gameloop {
 	static bool s_gameloop_running = false;
-	static logical::Board s_current_board{CoordsIntRect{{0, 0}, {8, 8}}};
+	static logical::Board s_current_board{};
 
 	void loop() {
 		s_gameloop_running = true;

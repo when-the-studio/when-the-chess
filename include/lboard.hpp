@@ -101,16 +101,23 @@ namespace logical {
 	public:
 		Type type;
 		PlayerColor color;
+
+	public:
+		Piece(Type type, PlayerColor color);
 	};
 
 	class Tile {
 	public:
 		std::optional<Piece> opt_piece;
+
+	public:
+		Tile();
 	};
 
 	class Board {
 	public:
-		Board(CoordsIntRect rect);
+		Board(CoordsIntRect rect); /* Empty tiles (the tiles at least exist). */
+		Board(); /* Classic 8x8 initial board. */
 
 		bool is_there_a_tile_at(CoordsInt coords) const;
 

@@ -53,6 +53,13 @@ namespace renderer {
 		IMG_Quit();
 	}
 
+	static SDL_Texture* piece_texture(logical::Piece piece) {
+		return s_test_pieces_sprites[
+			5 - static_cast<int>(piece.type) +
+			(piece.color == logical::PlayerColor::WHITE ? 0 : 1)
+		];
+	}
+
 	void init() {
 		assert(SDL_WasInit(SDL_INIT_VIDEO));
 
@@ -76,6 +83,7 @@ namespace renderer {
 		SDL_SetRenderDrawColor(s_renderer, 54, 32, 96, 255);
 		SDL_RenderClear(s_renderer);
 
+		/* Render the background of tiles. */
 		for (CoordsInt coords : board.rect_that_contains_all_the_tiles()) {
 			Rgb const& color = (coords.x + coords.y) % 2 == 0 ?
 				s_rgb_tile_light : s_rgb_tile_dark;
@@ -84,13 +92,15 @@ namespace renderer {
 			SDL_RenderFillRect(s_renderer, &rect);
 		}
 
-		/* Test rendering of the image assets. */
-		for (std::size_t i = 0; i < s_test_pieces_sprites.size(); i++) {
-			SDL_Rect rect{
-				static_cast<int>(i % 8) * 45,
-				static_cast<int>(i / 8) * 45,
-				45, 45};
-			SDL_RenderCopy(s_renderer, s_test_pieces_sprites[i], NULL, &rect);
+		/* Render the pieces. */
+		for (CoordsInt coords : board.rect_that_contains_all_the_tiles()) {
+			std::optional<logical::Piece> const& opt_piece = board.tile_at(coords).opt_piece;
+			if (not opt_piece.has_value()) {
+				continue;
+			}
+			logical::Piece const& piece = opt_piece.value();
+			SDL_Rect rect{coords.x * 45, coords.y * 45, 45, 45};
+			SDL_RenderCopy(s_renderer, piece_texture(piece), NULL, &rect);
 		}
 
 		SDL_RenderPresent(s_renderer);
