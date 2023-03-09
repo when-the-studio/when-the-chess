@@ -56,7 +56,7 @@ namespace renderer {
 	static SDL_Texture* piece_texture(logical::Piece piece) {
 		return s_test_pieces_sprites[
 			5 - static_cast<int>(piece.type) +
-			(piece.color == logical::PlayerColor::WHITE ? 0 : 1)
+			6 * (piece.color == logical::PlayerColor::WHITE ? 0 : 1)
 		];
 	}
 
