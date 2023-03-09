@@ -95,9 +95,37 @@ namespace logical {
 
 	Board::Board():
 	Board({{0, 0}, {8, 8}}) {
-		/* TODO: Actual classic chess initial pieces.
-		 * For now there is just a placeholder horsie. */
-		this->tile_at({2, 4}).opt_piece = Piece{Piece::Type::KNIGHT, PlayerColor::WHITE};
+		/* Initializes the Board with the classic chess pieces */
+		for (int x = 0; x < 8; x++)
+		for (int y = 0; y < 8; y++) {
+			PlayerColor const color = y >= 4 ? PlayerColor::WHITE : PlayerColor::BLACK;
+			if (y == 1 || y == 6) {
+				this->tile_at({x, y}).opt_piece = Piece{Piece::Type::PAWN, color};
+			} else if (y == 0 || y == 7) {
+				Piece::Type type;
+				switch (x) {
+				case 0:
+				case 7:
+					type = Piece::Type::ROOK;
+					break;
+				case 1:
+				case 6:
+					type = Piece::Type::KNIGHT;
+					break;
+				case 2:
+				case 5:
+					type = Piece::Type::BISHOP;
+					break;
+				case 3:
+					type = Piece::Type::QUEEN;
+					break;
+				case 4:
+					type = Piece::Type::KING;
+					break;
+				}
+				this->tile_at({x, y}).opt_piece = Piece{type, color};
+			}
+		}
 	}
 
 	bool Board::is_there_a_tile_at(CoordsInt coords) const {
